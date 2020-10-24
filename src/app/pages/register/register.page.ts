@@ -43,19 +43,20 @@ constructor(public loading: LoadingService, public toastCtrl: ToastController, p
     } catch (error) {
       console.log(error);
       let message: string;
+      console.log(error.code);
       
       switch(error.code){
         case 'auth/email-already-in-use':
           message = "E-mail já cadastrado!"
-          break;
+        break;
 
         case 'auth/invalid-email':
           message = "Verifique o e-mail digitado!"
-          break;
+        break;
 
         default:
           message = "Verifique se os dados foram preenchidos corretamente"
-          break;
+        break;
       }
 
       this.presentToast(message);

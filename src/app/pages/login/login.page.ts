@@ -13,7 +13,6 @@ export class LoginPage implements OnInit {
   @ViewChild(IonSlides, {static: false}) slides: IonSlides;
   public userLogin: Users = {};
   public userRegister: Users = {};
-  // private loading: any;
 
   constructor(public loading: LoadingService, public toastCtrl: ToastController, private authService: AuthService) { }
 
@@ -49,8 +48,24 @@ export class LoginPage implements OnInit {
     try {
       await this.authService.login(this.userLogin);
     } catch (error) {
-      console.log(error);
-      this.presentToast(error.message);
+      let message: string;
+      console.log(error.code);
+      
+      switch(error.code){
+        case 'auth/email-already-in-use':
+          message = "E-mail já cadastrado!"
+        break;
+
+        case 'auth/invalid-email':
+          message = "Verifique o e-mail digitado!"
+        break;
+
+        default:
+          message = "Verifique se os dados foram preenchidos corretamente"
+        break;
+      }
+
+      this.presentToast(message);
     } finally {
       this.loading.dismiss();
       this.fieldsReset();
