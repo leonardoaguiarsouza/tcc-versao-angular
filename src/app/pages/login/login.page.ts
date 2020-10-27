@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, LoadingController, ToastController } from '@ionic/angular';
+import { IonSlides, LoadingController, ToastController, Events } from '@ionic/angular';
 import { Users } from 'src/app/interfaces/users';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
   public userLogin: Users = {};
   public userRegister: Users = {};
 
-  constructor(public loading: LoadingService, public toastCtrl: ToastController, private authService: AuthService) { }
+  constructor(public loading: LoadingService, public toastCtrl: ToastController, private authService: AuthService, public events: Events) { }
 
   ngOnInit() {
   }
@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     } catch (error) {
       console.log(error);
       this.presentToast(error.message);
-    } 
+    }
   }
 
   loginFacebook(){

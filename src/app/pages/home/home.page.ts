@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Note } from 'src/app/interfaces/note';
 import { NoteService } from 'src/app/services/notes.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
