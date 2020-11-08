@@ -45,13 +45,15 @@ export class LoginPage implements OnInit {
     }
   }
 
-  loginFacebook(){
+  async loginFacebook(){
     try {
-      this.authService.loginFacebook();
+      await this.authService.loginFacebook();
     } catch (error) {
       console.log(error);
       this.presentToast(error.message);
-    } 
+    } finally {
+      this.events.publish('user:loggedGF', this.authService.getAuth());
+    }
   }
 
   async login() {
