@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, LoadingController, ToastController, Events } from '@ionic/angular';
+import { IonSlides, LoadingController, ToastController, Events, MenuController } from '@ionic/angular';
 import { Users } from 'src/app/interfaces/users';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -14,9 +14,19 @@ export class LoginPage implements OnInit {
   public userLogin: Users = {};
   public userRegister: Users = {};
 
-  constructor(public loading: LoadingService, public toastCtrl: ToastController, private authService: AuthService, public events: Events) { }
+  constructor(
+    public loading: LoadingService,
+    public toastCtrl: ToastController,
+    private authService: AuthService,
+    public events: Events,
+    private menuCtrl: MenuController
+  ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
   }
 
   fieldsReset() {
@@ -24,12 +34,14 @@ export class LoginPage implements OnInit {
     this.userLogin.password = '';
   }
 
-  loginGoogle(){
+  async loginGoogle(){
     try {
-      this.authService.loginGoogle();
+      await this.authService.loginGoogle();
     } catch (error) {
       console.log(error);
       this.presentToast(error.message);
+    } finally {
+      this.events.publish('user:loggedGF', this.authService.getAuth());
     }
   }
 
@@ -69,6 +81,7 @@ export class LoginPage implements OnInit {
     } finally {
       this.loading.dismiss();
       this.fieldsReset();
+      this.events.publish('user:loggedReg', this.authService.getAuth());
     }
   }
 
@@ -82,7 +95,8 @@ export class LoginPage implements OnInit {
       duration: 4000,
       color: "danger"
     });
+    
     toast.present();
-    }
+  }
 
 }

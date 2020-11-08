@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Observable } from 'rxjs';
 import { Note } from './interfaces/note';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
+import { Users } from './interfaces/users';
 
 @Component({
   selector: 'app-root',
@@ -14,19 +16,34 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   public notes: Observable<Note[]>
-  public userName: string
-  public userEmail: string
+  public userName: string = null;
+  public userEmail: string = null;
+  public userObj: Observable<Users[]>;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
+    private userService: UserService,
     private menu: MenuController,
     public events: Events
   ) {
     this.initializeApp();
-    events.subscribe('user:logged', (auth) => {
-      this.userEmail = auth.currentUser.email;
+    events.subscribe('user:loggedGF', (auth) => {
+      if (this.userEmail == null && this.userName == null) {
+        this.userEmail = auth.currentUser.email;
+        this.userName = auth.currentUser.displayName;
+      }
+    });
+
+    events.subscribe('user:loggedReg', (auth) => {
+      if (this.userEmail == null && this.userName == null) {
+        this.userEmail = auth.currentUser.email;
+        this.userObj = this.userService.getUser(auth.currentUser.uid);
+        this.userObj.forEach(element => {
+          this.userName = element[0].name;
+        });
+      }
     });
   }
 
@@ -42,7 +59,10 @@ export class AppComponent implements OnInit {
   
   logout() {
     this.notes = null;
+    this.userEmail = null;
+    this.userName = null;
     this.menu.close();
+    this.menu.enable(false);
     return this.authService.logout();
   }
 }

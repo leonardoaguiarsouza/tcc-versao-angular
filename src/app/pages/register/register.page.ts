@@ -3,6 +3,7 @@ import { LoadingService } from './../../services/loading.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Users } from 'src/app/interfaces/users';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,12 @@ import { Users } from 'src/app/interfaces/users';
 export class RegisterPage implements OnInit {
   public userRegister: Users = {};
 
-constructor(public loading: LoadingService, public toastCtrl: ToastController, private authService: AuthService) { }
+  constructor(
+    public loading: LoadingService,
+    public toastCtrl: ToastController,
+    private authService: AuthService,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
   }
@@ -38,8 +44,15 @@ constructor(public loading: LoadingService, public toastCtrl: ToastController, p
   async register() {
     await this.presentLoading();
 
+    let userInfo: Users = {
+      birthDate: this.userRegister.birthDate,
+      name: this.userRegister.name
+    }
+
     try {
-      await this.authService.register(this.userRegister);
+      await this.authService.register(this.userRegister).then(() => {
+        this.userService.createUser(userInfo);
+      });
     } catch (error) {
       console.log(error);
       let message: string;

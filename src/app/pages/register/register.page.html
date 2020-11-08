@@ -14,11 +14,11 @@
             <div padding>
               <ion-item>
                 <ion-label position="floating" autocomplete="off">Nome</ion-label>
-                <ion-input name="name" required></ion-input>
+                <ion-input [(ngModel)]="userRegister.name" name="name" required></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="stacked">Data de nascimento</ion-label>
-                <ion-input name="birthDate" type="date" required></ion-input>
+                <ion-input [(ngModel)]="userRegister.birthDate" name="birthDate" type="date" required></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">E-mail</ion-label>

@@ -14,11 +14,11 @@ export class AuthService {
     return this.afa.auth.signInWithEmailAndPassword(user.email, user.password);
   }
 
-  loginGoogle(){
+  loginGoogle() {
     return this.afa.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
 
-  loginFacebook(){
+  loginFacebook() {
     return this.afa.auth.signInWithPopup(new auth.FacebookAuthProvider());
   }
 

@@ -1,13 +1,13 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
+  <ion-split-pane contentId="main-content" id="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
+          <ion-list-header>{{userName}}</ion-list-header>
           <ion-note>{{userEmail}}</ion-note>
         </ion-list>
 
-        <ion-buttons>
+        <ion-buttons class="alinharBotao">
           <ion-button (click)="logout()">
             <ion-icon name="log-out"></ion-icon>
               Logout
