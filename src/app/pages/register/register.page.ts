@@ -1,7 +1,7 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, Events } from '@ionic/angular';
 import { Users } from 'src/app/interfaces/users';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,28 +17,33 @@ export class RegisterPage implements OnInit {
     public loading: LoadingService,
     public toastCtrl: ToastController,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private events: Events
   ) { }
 
   ngOnInit() {
   }
 
-  loginGoogle(){
+  async loginGoogle(){
     try {
-      this.authService.loginGoogle();
+      await this.authService.loginGoogle();
     } catch (error) {
       console.log(error);
       this.presentToast(error.message);
-    } 
+    } finally {
+      this.events.publish('user:loggedGF', this.authService.getAuth());
+    }
   }
 
-  loginFacebook(){
+  async loginFacebook(){
     try {
-      this.authService.loginFacebook();
+      await this.authService.loginFacebook();
     } catch (error) {
       console.log(error);
       this.presentToast(error.message);
-    } 
+    } finally {
+      this.events.publish('user:loggedGF', this.authService.getAuth());
+    }
   }
 
   async register() {
