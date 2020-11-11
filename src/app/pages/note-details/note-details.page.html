@@ -9,51 +9,49 @@
 </ion-header>
 
 <ion-content padding>
- 
-    <ion-item>
-      <ion-label position="stacked">Título</ion-label>
-      <ion-input [(ngModel)]="note.title"></ion-input>
-    </ion-item>
-   
-    <ion-item>
-      <ion-label position="stacked">Conteúdo</ion-label>
-      <ion-textarea [(ngModel)]="note.content" rows="8"></ion-textarea>
-    </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Título</ion-label>
+    <ion-input [(ngModel)]="note.title"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked">Conteúdo</ion-label>
+    <ion-textarea [(ngModel)]="note.content" rows="8"></ion-textarea>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="fixed">Intervalo</ion-label>
-      <ion-input type="number" [(ngModel)]="note.interval"></ion-input><ion-label> min.</ion-label>
-    </ion-item>
+  <ion-item>
+    <ion-label position="fixed">Intervalo</ion-label>
+    <ion-input type="number" [(ngModel)]="note.interval"></ion-input><ion-label> min.</ion-label>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="fixed">Ativo</ion-label>
-      <ion-checkbox [(ngModel)]="note.active"></ion-checkbox>
-    </ion-item>
-
-  </ion-content>
-   
-  <ion-footer *ngIf="!note.id">
-    <ion-toolbar color="success">
-      <ion-button expand="full" fill="clear" color="light" (click)="addNote()">
-        <ion-icon name="checkmark" slot="start"></ion-icon>
-        Salvar
+  <ion-item>
+    <ion-label position="fixed">Ativo</ion-label>
+    <ion-checkbox [(ngModel)]="note.active"></ion-checkbox>
+  </ion-item>
+</ion-content>
+  
+<ion-footer *ngIf="!note.id">
+  <ion-toolbar color="success">
+    <ion-button expand="full" fill="clear" color="light" (click)="addNote()">
+      <ion-icon name="checkmark" slot="start"></ion-icon>
+      Salvar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+  
+<ion-footer *ngIf="note.id">
+  <ion-row no-padding text-center>
+    <ion-col size="6">
+      <ion-button expand="block" fill="outline" color="danger" (click)="deleteNote()">
+        <ion-icon name="trash" slot="start"></ion-icon>
+        Apagar
       </ion-button>
-    </ion-toolbar>
-  </ion-footer>
-   
-  <ion-footer *ngIf="note.id">
-    <ion-row no-padding text-center>
-      <ion-col size="6">
-        <ion-button expand="block" fill="outline" color="danger" (click)="deleteNote()">
-          <ion-icon name="trash" slot="start"></ion-icon>
-          Apagar
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button expand="block" fill="solid" color="success" (click)="updateNote()">
-          <ion-icon name="save" slot="start"></ion-icon>
-          Atualizar
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-footer>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="block" fill="solid" color="success" (click)="updateNote()">
+        <ion-icon name="save" slot="start"></ion-icon>
+        Atualizar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
