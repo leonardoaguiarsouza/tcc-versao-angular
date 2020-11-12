@@ -55,7 +55,7 @@ export class NoteService {
   }
  
   updateNote(note: Note): Promise<void> {
-    return this.noteCollection.doc(note.id).update({ title: note.title, content: note.content, lastModify: note.lastModify, active: note.active, interval: note.interval });
+    return this.noteCollection.doc(note.id).update({ title: note.title, content: note.content, lastModify: note.lastModify, active: note.active });
   }
  
   deleteNote(id: string): Promise<void> {

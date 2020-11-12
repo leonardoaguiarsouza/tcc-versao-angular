@@ -80,6 +80,7 @@ export class RegisterPage implements OnInit {
       this.presentToast(message);
     } finally {
       this.loading.dismiss();
+      this.events.publish('user:loggedReg', this.authService.getAuth());
     }
   }
 

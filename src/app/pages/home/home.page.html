@@ -16,7 +16,7 @@
 
   <ion-list *ngIf="notes">
     <ion-item button [routerLink]="['/note', note.id]" *ngFor="let note of (notes | async)">
-      <ion-label [color]="note.active ? '' : 'danger'">{{ note.title }} - {{ note.interval }} min.</ion-label>
+      <ion-label [color]="note.active ? '' : 'danger'">{{ note.title }}</ion-label>
     </ion-item>
   </ion-list>
 

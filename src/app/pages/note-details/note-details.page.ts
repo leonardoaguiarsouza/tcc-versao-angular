@@ -15,7 +15,6 @@ export class NoteDetailsPage implements OnInit {
     title: '',
     content: '',
     active: false,
-    interval: null,
     lastModify: null
   }
 

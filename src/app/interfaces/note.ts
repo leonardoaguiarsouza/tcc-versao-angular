@@ -5,6 +5,5 @@ export interface Note {
     createdAt?: Date,
     lastModify: Date,
     active?: boolean,
-    interval?: number,
     user?: string
   }
