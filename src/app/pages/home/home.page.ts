@@ -31,11 +31,5 @@ export class HomePage implements OnInit {
     this.user = this.authService.getUserId();
     this.notes = this.noteService.getNotes(this.user);
     this.menuCtrl.enable(true);
-  }
-  
-  logout() {
-    this.notes = null;
-    return this.authService.logout();
-  }
-  
+  }  
 }
