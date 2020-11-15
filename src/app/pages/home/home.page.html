@@ -15,8 +15,12 @@
   </ion-fab>
 
   <ion-list *ngIf="notes">
-    <ion-item button [routerLink]="['/note', note.id]" *ngFor="let note of (notes | async)">
-      <ion-label [color]="note.active ? '' : 'danger'">{{ note.title }}</ion-label>
+    <ion-item [class]="note.active ? 'note-active' : 'note-inactive'" button [routerLink]="['/note', note.id]" *ngFor="let note of (notes | async)">
+      <ion-label>
+        <h3>{{ note.title }}</h3>
+        <p>Ultima modificação em:</p>
+        <p>&mdash;&nbsp;{{ note.lastModifyDate }}</p>
+      </ion-label>
     </ion-item>
   </ion-list>
 

@@ -25,14 +25,22 @@ export class NoteService {
     );
   }
 
+  private dateConverter(timestamp: any){
+    let date = timestamp.toDate().toLocaleDateString('pt-BR');
+    let time = timestamp.toDate().toLocaleTimeString('pt-BR');
+    let dateString = date + " " + time;
+    return dateString;
+  }
+
   getNotes(user: string): Observable<Note[]> {
     let noteCollection = this.afs.collection<Note>('notes', ref => ref.where('user', '==', user));
     let notes = noteCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
+          const lastModifyDate = this.dateConverter(data.lastModify);
           const id = a.payload.doc.id;
-          return { id, ...data };
+          return { id, lastModifyDate, ...data };
         });
       })
     );

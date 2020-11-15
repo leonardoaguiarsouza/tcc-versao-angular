@@ -17,9 +17,7 @@ export class RegisterPage implements OnInit {
     public loading: LoadingService,
     public toastCtrl: ToastController,
     private authService: AuthService,
-    private userService: UserService,
-    private events: Events
-  ) { }
+    private userService: UserService ) { }
 
   ngOnInit() {
   }
@@ -30,8 +28,6 @@ export class RegisterPage implements OnInit {
     } catch (error) {
       console.log(error);
       this.presentToast(error.message);
-    } finally {
-      this.events.publish('user:loggedGF', this.authService.getAuth());
     }
   }
 
@@ -41,8 +37,6 @@ export class RegisterPage implements OnInit {
     } catch (error) {
       console.log(error);
       this.presentToast(error.message);
-    } finally {
-      this.events.publish('user:loggedGF', this.authService.getAuth());
     }
   }
 
@@ -80,7 +74,6 @@ export class RegisterPage implements OnInit {
       this.presentToast(message);
     } finally {
       this.loading.dismiss();
-      this.events.publish('user:loggedReg', this.authService.getAuth());
     }
   }
 
@@ -95,6 +88,6 @@ export class RegisterPage implements OnInit {
       color: "danger"
     });
     toast.present();
-    }
+  }
 
 }

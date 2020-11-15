@@ -3,7 +3,7 @@ export interface Note {
     title: string,
     content: string,
     createdAt?: Date,
-    lastModify: Date,
+    lastModify?: Date,
     active?: boolean,
     user?: string
   }

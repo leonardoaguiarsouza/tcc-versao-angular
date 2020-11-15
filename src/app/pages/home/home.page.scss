@@ -1,0 +1,9 @@
+ion-item.note-active ion-label {
+    border-left: 2px solid var(--ion-color-success);
+    padding-left: 10px;
+}
+
+ion-item.note-inactive ion-label {
+    border-left: 2px solid var(--ion-color-danger);
+    padding-left: 10px;
+}

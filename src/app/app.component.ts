@@ -29,20 +29,18 @@ export class AppComponent implements OnInit {
     public events: Events
   ) {
     this.initializeApp();
-    events.subscribe('user:loggedGF', (auth) => {
-      if (this.userEmail == null && this.userName == null) {
-        this.userEmail = auth.currentUser.email;
-        this.userName = auth.currentUser.displayName;
-      }
-    });
-
-    events.subscribe('user:loggedReg', (auth) => {
-      if (this.userEmail == null && this.userName == null) {
-        this.userEmail = auth.currentUser.email;
-        this.userObj = this.userService.getUser(auth.currentUser.uid);
-        this.userObj.forEach(element => {
-          this.userName = element[0].name;
-        });
+    this.authService.getAuth().onAuthStateChanged(user=> {
+      if(user) {
+        this.menu.enable(true);
+        this.userEmail = user.email;
+        if(user.displayName) {
+          this.userName = user.displayName;
+        } else {
+          this.userObj = this.userService.getUser(user.uid);
+          this.userObj.forEach(element => {
+            this.userName = element[0].name;
+          });
+        }
       }
     });
   }
@@ -58,11 +56,13 @@ export class AppComponent implements OnInit {
   }
   
   logout() {
-    this.notes = null;
-    this.userEmail = null;
     this.userName = null;
-    this.menu.close();
-    this.menu.enable(false);
-    return this.authService.logout();
+    this.menu.close().then(() => {
+      this.notes = null;
+      this.userEmail = null;
+      this.menu.enable(false).then(() => {
+        this.authService.logout();
+      });
+    });
   }
 }

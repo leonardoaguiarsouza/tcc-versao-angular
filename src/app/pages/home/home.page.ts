@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Note } from 'src/app/interfaces/note';
 import { NoteService } from 'src/app/services/notes.service';
-import { MenuController, Events } from '@ionic/angular';
+import { Events } from '@ionic/angular';
 import { Users } from 'src/app/interfaces/users';
 
 @Component({
@@ -20,9 +20,8 @@ export class HomePage implements OnInit {
   constructor(
     public events: Events,
     private noteService: NoteService,
-    private authService: AuthService,
-    private menuCtrl: MenuController
-  ) { }
+    private authService: AuthService
+  ) {  }
   
   ngOnInit() {
   }
@@ -30,6 +29,5 @@ export class HomePage implements OnInit {
   ionViewWillEnter() {
     this.user = this.authService.getUserId();
     this.notes = this.noteService.getNotes(this.user);
-    this.menuCtrl.enable(true);
   }  
 }
