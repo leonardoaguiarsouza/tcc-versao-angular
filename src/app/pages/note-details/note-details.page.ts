@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NoteService } from 'src/app/services/notes.service';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-note-details',
@@ -20,6 +21,7 @@ export class NoteDetailsPage implements OnInit {
 
   constructor( 
       private acticatedRoute: ActivatedRoute,
+      private authService: AuthService,
       private noteService: NoteService,
       private toastCtrl: ToastController,
       private router: Router 
@@ -30,6 +32,12 @@ export class NoteDetailsPage implements OnInit {
 
     if(id) {
       this.noteService.getNote(id).subscribe(note => {
+        if(note.user != this.authService.getUserId()) {
+          this.router.navigateByUrl('/home');
+          this.showRedToast('Sem permissão para acessar essa nota');
+          return;
+        }
+
         this.note = note;
       })
     }
@@ -69,6 +77,14 @@ export class NoteDetailsPage implements OnInit {
     this.toastCtrl.create({
       message,
       duration: 2000
+    }).then(toast => toast.present());
+  }
+
+  showRedToast(message) {
+    this.toastCtrl.create({
+      message,
+      duration: 2000,
+      color: "danger"
     }).then(toast => toast.present());
   }
 

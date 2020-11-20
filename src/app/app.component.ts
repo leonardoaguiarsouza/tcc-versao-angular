@@ -58,9 +58,9 @@ export class AppComponent implements OnInit {
   logout() {
     this.userName = null;
     this.menu.close().then(() => {
-      this.notes = null;
-      this.userEmail = null;
       this.menu.enable(false).then(() => {
+        this.notes = null;
+        this.userEmail = null;
         this.authService.logout();
       });
     });
